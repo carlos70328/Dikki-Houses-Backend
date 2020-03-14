@@ -1,0 +1,67 @@
+{
+    "description": { "type": "String", "default": "noDescription" },
+    "owner": { "type": "String", "default": "noOwner" },
+    "price": { "type": "Number", "min": 0, "default": 0 },
+    "status": { "type": "String", "default": "available" },
+    "type": { "type": "String", "default": "noType" },
+    "stratum": { "type": "Number", "min": 1, "default": 1 },
+    "title": { "type": "String", "default": "noTitle" },
+    "size": { "type": "String", "default": "0m2" },
+    "location": {
+        "city": { "type": "String", "default": "noCity" },
+        "country": { "type": "String", "default": "noCountry" },
+        "description": { "type": "String", "default": "noLocationDescription" },
+        "coordinates": {
+            "x": { "type": "Number" },
+            "y": { "type": "Number" }
+        }
+    },
+    "components": {
+        "bathrooms": {
+            "quantity": { "type": "Number", "min": 0, "default": 1 }
+        },
+        "bedrooms": {
+            "quantity": { "type": "Number", "min": 0, "default": 0 }
+        },
+        "garage": {
+            "quantity": { "type": "Number", "min": 0, "default": 0 }
+        }
+    },
+    "services": [
+        {
+            "date": { "type": "Date", "default": "Date.now" },
+            "values": {
+                "water": { "type": "Number", "min": 0, "default": 0 },
+                "energy": { "type": "Number", "min": 0, "default": 0 }, 
+                "gas": { "type": "Number", "min": 0, "default": 0 }
+            } 
+        }
+    ],
+    "resources": {
+        "photos": [
+            {
+                "name": { "type": "String", "default": "noName" },
+                "description": { "type": "String", "default": "noDescription" },
+                "url": { "type": "String", "default": "noUrl" },
+                "date": { "type": "Date", "default": "Date.now" }
+            }
+        ], 
+        "videos": [
+            {
+                "name": { "type": "String", "default": "noName" },
+                "description": { "type": "String", "default": "noDescription" },
+                "url": { "type": "String", "default": "noUrl" },
+                "date": { "type": "Date", "default": "Date.now" }
+            }
+        ], 
+        "other": [
+            {
+                "name": { "type": "String", "default": "noName" },
+                "type": { "type": "String", "default": "noTypeResource" },
+                "description": { "type": "String", "default": "noDescription" },
+                "url": { "type": "String", "default": "noUrl" },
+                "date": { "type": "Date", "default": "Date.now" }
+            }
+        ]
+    }
+}
