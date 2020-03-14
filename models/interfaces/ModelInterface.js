@@ -17,7 +17,12 @@ class ModelInterface {
      * @param {string} id: unique identifier in database
      */
     findById(id) {
-        throw new Error("You must Implement findById");
+        return new Promise((resolve, reject) => {
+                this.driver.findById(id, this._houseModel, (err, houseInfo) => {
+                if(err) reject(err);
+                else resolve(houseInfo);
+            });
+        });
     }
 
 

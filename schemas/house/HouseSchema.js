@@ -11,13 +11,6 @@ class HouseSchema extends SchemaInterface {
         super(driver, houseSchemaDefinition);
     }
     
-    /**
-     * Add function to the schema 
-     * @param {Function} schemaFunction 
-     */
-    addFunction(schemaFunction) {
-        this.driver.addFunctionality(this._houseSchema, schemaFunction);
-    }
 }
 
 module.exports = HouseSchema;

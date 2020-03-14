@@ -13,21 +13,6 @@ class HouseModel extends ModelInterface {
         this._houseModel = this.driver.createModel(this.modelName, this.schema);
     }
 
-    /**
-     * find an house by its id
-     * @param {string} id : valid identifier
-     * @returns {Promise}
-     */
-    findById(id) { 
-        return new Promise((resolve, reject) => {
-                this.driver.findById(id, this._houseModel, (err, houseInfo) => {
-                if(err) reject(err);
-                else resolve(houseInfo);
-            });
-        });
-    }
-
-
 }
 
 module.exports = HouseModel;

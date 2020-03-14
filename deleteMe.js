@@ -1,4 +1,7 @@
 const dotenv = require('dotenv').config();
+const container = require('node-dependency-injection');
+
+
 const MongooseDriver = require('./database/driver/MongooseDriver');
 const HouseSchema = require('./schemas/house/HouseSchema');
 const HOUSE_SCHEMA = require('./schemas/house/houseSchemaDef.json');

@@ -4,13 +4,28 @@ const DatabaseInterface = require('../interfaces/DatabaseInterface');
 class Mongoose extends DatabaseInterface {
 
     /**
-     * 
-     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
+     * @param {Object} params
      */
-    constructor({ protocol, user, password, host, params, options }){
+    constructor(params){
         super();
         this._mongoDriver = mongoose;
+        this.connect(params);
+    }
+
+    /**
+     * create mongodb connection
+     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
+     */
+    connect({ protocol, user, password, host, params, options }){
         this._mongoConnetion = this._mongoDriver.connect(`${protocol}://${user}:${password}@${host}?${params}`, options);
+    }
+
+    /**
+     * close mongodb connection
+     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
+     */
+    disconnect(){
+        this._mongoDriver.connection.close()
     }
 
     /**

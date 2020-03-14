@@ -2,6 +2,20 @@ class DatabaseInterface {
     
     /**
      * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
+     */
+    connect(schemaDefinition){
+        throw new Error("You must Implement connect");
+    }
+
+    /**
+     * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
+     */
+    disconnect(schemaDefinition){
+        throw new Error("You must Implement disconnect");
+    }
+
+    /**
+     * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
      * @param {SchemaInterface} schemaDefinition 
      */
     createSchema(schemaDefinition){
