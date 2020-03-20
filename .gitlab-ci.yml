@@ -1,0 +1,27 @@
+image: node:8
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+  - node_modules/
+
+build:
+  image: node:8
+  stage: build
+  script:
+  - npm install
+  - npm run build
+  artifacts:
+    paths:
+      - build/
+
+deploy:
+  stage: deploy
+  script:
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
+  - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY --skip_cleanup

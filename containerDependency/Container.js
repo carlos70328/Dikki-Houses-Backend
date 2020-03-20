@@ -1,5 +1,6 @@
 const { ContainerBuilder } = require('node-dependency-injection');
 const dotenv = require('dotenv').config();
+const mongoose = require('mongoose');
 const mongoVariables = JSON.parse(process.env.MONGO_VALUES);
 
 const MongooseDriver = require('../database/driver/MongooseDriver');
@@ -8,8 +9,9 @@ const HOUSE_SCHEMA = require('../schemas/house/houseSchemaDef.json');
 const HouseModel = require('../models/house/HouseModel');
 
 const container = new ContainerBuilder();
+global.containerDependency = container;
 
-container.register('mongooseDriver', MongooseDriver).addArgument(mongoVariables);
+container.register('mongooseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
 const driver = container.get('mongooseDriver');
 
 container.register('houseSchema', HouseSchema).addArgument(driver).addArgument(HOUSE_SCHEMA);
@@ -17,9 +19,11 @@ const schema = container.get('houseSchema');
 
 container.register('houseModel', HouseModel).addArgument(driver).addArgument('houses').addArgument(schema.schema);
 
-let a = container.get('houseModel');
+// let a = container.get('houseModel');
 
-a.findById('5e6596179d4a8d63c09aa6ae').then(houseInfo => {
-    console.log(houseInfo)
-    driver.disconnect();
-});
+// a.findById('5e6596179d4a8d63c09aa6ae').then(houseInfo => {
+//     console.log(houseInfo)
+//     driver.disconnect();
+ // });
+
+module.exports = container;
