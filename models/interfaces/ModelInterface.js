@@ -13,6 +13,18 @@ class ModelInterface {
     }
 
     /**
+     * Get all elements in database
+     */
+    findAll() {
+        return new Promise((resolve, reject) => {
+                this.driver.findAll(this._houseModel, (err, houseInfo) => {
+                if(err) reject(err);
+                else resolve(houseInfo);
+            });
+        });
+    }
+
+    /**
      * Search a element in database by id
      * @param {string} id: unique identifier in database
      */
@@ -24,8 +36,6 @@ class ModelInterface {
             });
         });
     }
-
-
 }
 
 module.exports = ModelInterface;
