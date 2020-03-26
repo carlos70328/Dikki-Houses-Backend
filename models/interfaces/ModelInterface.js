@@ -9,7 +9,7 @@ class ModelInterface {
     constructor(driver, modelName, schema){
         this.driver = driver;
         this.modelName = modelName;
-        this.schema = schema;
+        this.schema = schema.schema;
     }
 
     /**
