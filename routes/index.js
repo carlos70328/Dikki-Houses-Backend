@@ -3,12 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('Main request');
+  res.send('404: not found');
 });
-
-router.post('/', function(req, res, next) {
-  res.send("Holita post");
-});
-
 
 module.exports = router;
