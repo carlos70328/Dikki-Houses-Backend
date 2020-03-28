@@ -1,9 +1,13 @@
-const createError = require('http-errors');
-const cors = require('cors');
 const express = require('express');
+const cors = require('cors');
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
+
+const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
 const indexRouter = require('./routes/index');
 const housesRouter = require('./routes/houses');
 const app = express();
@@ -16,6 +20,35 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
+// Set up Auth0 configuration
+const authConfig = {
+  "domain": "apparriendos.auth0.com",
+  "clientId": "dhXmTUed463UHjuXTIGbhcueTTCT8rCQ",
+  "audience": "https://apparriendos.auth0.com/api/v2/"
+};
+
+// Define middleware that validates incoming bearer tokens
+// using JWKS from YOUR_DOMAIN
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
+  }),
+
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
+  algorithm: ["RS256"]
+});
+
+// Define an endpoint that must be called with an access token
+app.get("/api/external", checkJwt, (req, res) => {
+  res.send({
+    msg: "Your Access Token was successfully validated!"
+  });
+});
 
 containerDependency.get('mongooseDriver').connect();
 
@@ -39,25 +72,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-// --------------------------------------------------
-// const express = require('express');
-// global.containerDependency = require('./containerDependency/Container');
-// const app = express();
-
-// app.get('/houses', function(req, res, next) {
-//   const mongoConnection = containerDependency.get('mongooseDriver');
-//   mongoConnection.connect();
-
-//   const houseModel = containerDependency.get('houseModel');
-//   houseModel.findById('5e6596179d4a8d63c09aa6ae').then(houseInfo => {
-//     res.send(houseInfo);
-//     mongoConnection.disconnect();
-//   });
-// });
-
-// app.listen(3000, () => {
-//   console.log("listening")
-// });
-
-// module.exports = app;
