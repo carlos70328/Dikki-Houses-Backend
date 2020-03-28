@@ -27,16 +27,16 @@
             "quantity": { "type": "Number", "min": 0, "default": 0 }
         }
     },
-    "services": [
-        {
+    "services": { 
+        "type": [{
             "date": { "type": "Date", "default": "Date.now" },
             "values": {
                 "water": { "type": "Number", "min": 0, "default": 0 },
                 "energy": { "type": "Number", "min": 0, "default": 0 }, 
                 "gas": { "type": "Number", "min": 0, "default": 0 }
             } 
-        }
-    ],
+        }]
+    },
     "resources": {
         "photos": [
             {
