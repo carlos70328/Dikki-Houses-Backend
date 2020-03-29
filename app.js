@@ -25,7 +25,7 @@ app.use(cors());
 const authConfig = {
   "domain": "apparriendos.auth0.com",
   "clientId": "dhXmTUed463UHjuXTIGbhcueTTCT8rCQ",
-  "audience": "https://apparriendos.auth0.com/api/v2/"
+  "audience": "https://dikki.com/api/v3/"
 };
 
 // Define middleware that validates incoming bearer tokens
