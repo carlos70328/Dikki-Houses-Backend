@@ -13,6 +13,7 @@ const housesRouter = require('./routes/houses');
 const app = express();
 
 global.containerDependency = require('./containerDependency/Container');
+global.Helpers = require('./helpers/Helpers');
 
 app.use(logger('dev'));
 app.use(express.json());

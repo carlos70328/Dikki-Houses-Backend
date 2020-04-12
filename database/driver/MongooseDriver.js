@@ -9,7 +9,6 @@ class Mongoose extends DatabaseInterface {
         super();
         this._mongoDriver = driver;
         this.params = params;
-        // this.connect(params);
     }
 
     /**
@@ -17,8 +16,31 @@ class Mongoose extends DatabaseInterface {
      * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
      */
     connect(){
-        const { protocol, user, password, host, params, options } = this.params;
-        this._mongoConnetion = this._mongoDriver.connect(`${protocol}://${user}:${password}@${host}?${params}`, options);
+        const connectionString = this.makeConnectionString(this.params);
+        const { options } = this.params;
+        this._mongoConnetion = this._mongoDriver.connect(connectionString, options);
+    }
+
+    /**
+     * Create string to connect to database
+     * @param {*} param 
+     */
+    makeConnectionString({ protocol, user, password, host, database, params }){
+        if(Helpers.isSet(protocol) && Helpers.isSet(host) && Helpers.isSet(database)){
+            let connectStr = `${protocol}://[credentials]${host}/${database}[params]`;
+
+            Helpers.isSet(user) && Helpers.isSet(password) ? 
+                connectStr = connectStr.replace('[credentials]', `${user}:${password}@`) : 
+                connectStr = connectStr.replace('[credentials]', '');
+
+            Helpers.isSet(params) ? 
+                connectStr = connectStr.replace('[params]', `?${params}`) : 
+                connectStr = connectStr.replace('[params]', '');
+
+            return connectStr;
+        } else {
+            throw new Exception('Missing info to connect to database');
+        }
     }
 
     /**
