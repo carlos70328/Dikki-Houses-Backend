@@ -2,25 +2,40 @@ const express = require('express');
 const router = express.Router();
 const authorization = containerDependency.get('Auth0').authMiddleware;
 
+const houseModel = containerDependency.get('houseModel');
+
 router.get('/', (req, res, next) => {
-  const houseModel = containerDependency.get('houseModel');
   houseModel.findAll().then(houseInfo => {
     res.status(200).json(houseInfo);
-  });
+  }).catch(error => {
+    res.status(500).json({ error });
+  });;
 });
 
 router.get('/id/:id', (req, res, next) => {
   const id = req.params.id; //5e6596179d4a8d63c09aa6ae for test
-  const houseModel = containerDependency.get('houseModel');
   houseModel.findById(id).then(houseInfo => {
     res.status(200).json(houseInfo);
+  }).catch(error => {
+    res.status(500).json({ error });
   });
 });
 
-router.post('/add_houses', authorization, (req, res, next) => {
-  const reportMissingArgument = () => res.status(400).json({error: "missing argument"})
-  const 
+//No olvidar añadir el token
+router.post('/add_houses', (req, res, next) => {
+  const dataToSave = req.body;
+  houseModel.saveInfo(dataToSave).then(status => {
+    res.status(200).json({ status });
+  }).catch(error => {
+    res.status(500).json({ error });
+  });
 });
+
+// router.post('/add_houses', authorization, (req, res, next) => {
+//   const reportMissingArgument = () => res.status(400).json({error: "missing argument"})
+//   console.log("Post de añadir casas")
+//   const 
+// });
 
 router.get('/verifyToken', (req, res, next) => {
   res.send("Token is ok")

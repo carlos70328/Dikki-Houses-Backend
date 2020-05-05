@@ -18,6 +18,7 @@ build:
       - build/
 
 deploy:
+  when: manual
   stage: deploy
   script:
   - echo "MONGO_VALUES=$MONGO_VALUES" > .env

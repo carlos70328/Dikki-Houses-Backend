@@ -1,19 +1,19 @@
 {
-    "description": { "type": "String", "default": "noDescription" },
-    "owner": { "type": "String", "default": "noOwner" },
-    "price": { "type": "Number", "min": 0, "default": 0 },
-    "status": { "type": "String", "default": "available" },
-    "type": { "type": "String", "default": "noType" },
-    "stratum": { "type": "Number", "min": 1, "default": 1 },
-    "title": { "type": "String", "default": "noTitle" },
-    "size": { "type": "String", "default": "0m2" },
+    "description": { "type": "String", "required": true },
+    "owner": { "type": "String", "required": true },
+    "price": { "type": "Number", "min": 0, "required": true },
+    "status": { "type": "String", "required": true },
+    "type": { "type": "String", "required": true },
+    "stratum": { "type": "Number", "min": 1, "required": true },
+    "title": { "type": "String", "required": true },
+    "size": { "type": "String", "required": true },
     "location": {
-        "city": { "type": "String", "default": "noCity" },
-        "country": { "type": "String", "default": "noCountry" },
+        "city": { "type": "String", "required": true },
+        "country": { "type": "String", "required": true },
         "description": { "type": "String", "default": "noLocationDescription" },
         "coordinates": {
-            "x": { "type": "Number" },
-            "y": { "type": "Number" }
+            "x": { "type": "Number", "required": true },
+            "y": { "type": "Number", "required": true }
         }
     },
     "components": {
@@ -29,11 +29,11 @@
     },
     "services": { 
         "type": [{
-            "date": { "type": "Date", "default": "Date.now" },
+            "date": { "type": "Date", "default": "Date.now"},
             "values": {
-                "water": { "type": "Number", "min": 0, "default": 0 },
-                "energy": { "type": "Number", "min": 0, "default": 0 }, 
-                "gas": { "type": "Number", "min": 0, "default": 0 }
+                "water": { "type": "Number", "min": 0, "required": true },
+                "energy": { "type": "Number", "min": 0, "required": true }, 
+                "gas": { "type": "Number", "min": 0, "required": true }
             } 
         }]
     },
