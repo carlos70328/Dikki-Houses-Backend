@@ -51,18 +51,12 @@ class ModelInterface {
      */
     saveInfo(info){
         return new Promise ((resolve, reject) => {
-            console.log(info)
             const data = new this._houseModel(info);
             data.save((err, dataSaved) => {
-                console.log("SAVED");
-                if (err){
-                    console.log("ERROR", err)
+                if (err)
                     reject(err);
-                } 
-                if(dataSaved){
-                    console.log("OKI", dataSaved)
+                if(dataSaved)
                     resolve();
-                } 
             })
         });
     }

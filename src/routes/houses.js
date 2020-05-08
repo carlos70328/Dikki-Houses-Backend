@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
   houseModel.findAll().then(houseInfo => {
     res.status(200).json(houseInfo);
   }).catch(error => {
-    res.status(500).json({ error });
+    res.status(400).json({ error });
   });;
 });
 
@@ -17,7 +17,7 @@ router.get('/id/:id', (req, res, next) => {
   houseModel.findById(id).then(houseInfo => {
     res.status(200).json(houseInfo);
   }).catch(error => {
-    res.status(500).json({ error });
+    res.status(400).json({ error });
   });
 });
 
@@ -26,8 +26,8 @@ router.post('/add_houses', (req, res, next) => {
   const dataToSave = req.body;
   houseModel.saveInfo(dataToSave).then(status => {
     res.status(200).json({ status });
-  }).catch(error => {
-    res.status(500).json({ error });
+  }).catch( ({ errors }) => {
+    res.status(400).json({ errors });
   });
 });
 
