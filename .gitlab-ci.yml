@@ -22,6 +22,7 @@ deploy:
   stage: deploy
   script:
   - echo "MONGO_VALUES=$MONGO_VALUES" > .env
+  - echo "AUTH_VALUES=$AUTH_VALUES" >> .env
   - apt-get update -qy
   - apt-get install -y ruby-dev
   - gem install dpl
