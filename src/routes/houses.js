@@ -37,8 +37,8 @@ router.post('/add_houses', (req, res, next) => {
 //   const 
 // });
 
-router.get('/verifyToken', (req, res, next) => {
-  res.send("Token is ok")
+router.get('/verifyToken', authorization, (req, res, next) => {
+  res.send("Token is ok");
 });
 
 module.exports = router;

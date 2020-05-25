@@ -17,7 +17,7 @@ class ModelInterface {
      * Create model definition
      */
     createModel(){
-        this._houseModel = this.driver.createModel(this.modelName, this.schema);
+        this._model = this.driver.createModel(this.modelName, this.schema);
     }
 
     /**
@@ -25,7 +25,7 @@ class ModelInterface {
      */
     findAll() {
         return new Promise((resolve, reject) => {
-            this.driver.findAll(this._houseModel, (err, houseInfo) => {
+            this.driver.findAll(this._model, (err, houseInfo) => {
                 if(err) reject(err);
                 else resolve(houseInfo);
             });
@@ -38,7 +38,7 @@ class ModelInterface {
      */
     findById(id) {
         return new Promise((resolve, reject) => {
-            this.driver.findById(id, this._houseModel, (err, houseInfo) => {
+            this.driver.findById(id, this._model, (err, houseInfo) => {
                 if(err) reject(err);
                 else resolve(houseInfo);
             });
@@ -51,13 +51,13 @@ class ModelInterface {
      */
     saveInfo(info){
         return new Promise ((resolve, reject) => {
-            const data = new this._houseModel(info);
+            const data = new this._model(info);
             data.save((err, dataSaved) => {
                 if (err)
                     reject(err);
                 if(dataSaved)
                     resolve();
-            })
+            });
         });
     }
 }
