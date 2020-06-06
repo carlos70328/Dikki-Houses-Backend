@@ -5,34 +5,40 @@ const authorization = containerDependency.get('Auth0').authMiddleware;
 const houseModel = containerDependency.get('houseModel');
 
 router.get('/', (req, res, next) => {
-  houseModel.findAll().then(houseInfo => {
-    res.status(200).json(houseInfo);
-  }).catch(error => {
-    res.status(400).json({ error });
-  });;
+  houseModel.findAll().then(({ info, status }) => {
+    res.status(status).json(info);
+  }).catch(({ status, error }) => {
+    res.status(status).json(error);
+  });
 });
 
 router.get('/id/:id', (req, res, next) => {
   const id = req.params.id; //5e6596179d4a8d63c09aa6ae for test
-  houseModel.findById(id).then(houseInfo => {
-    res.status(200).json(houseInfo);
-  }).catch(error => {
-    res.status(400).json({ error });
+  houseModel.findById(id).then(({ info, status }) => {
+    res.status(status).json(info);
+  }).catch(({ status, error }) => {
+    res.status(status).json(error);
   });
-});
-
-router.put('/add_house_remove', (req, res) => {
-  console.log("Request-----------");
-  console.log(req.body);
 });
 
 //No olvidar añadir el token
 router.post('/add_houses', (req, res, next) => {
   const dataToSave = req.body;
-  houseModel.saveInfo(dataToSave).then(status => {
-    res.status(200).json({ status });
-  }).catch( ({ errors }) => {
-    res.status(400).json({ errors });
+  houseModel.saveInfo(dataToSave).then(({ info, status }) => {
+    res.status(status).json(info);
+  }).catch(({ status, error }) => {
+    res.status(status).json(error);
+  });
+});
+
+router.post('/edit_house', (req, res, next) => {
+  console.log("Request body", req.body ," END ");
+  const filter = req.body.filter;
+  const dataUpdate = req.body.update;
+  houseModel.editInfo(filter, dataUpdate).then(({ info, status }) => {
+    res.status(status).json(info);
+  }).catch(({ status, error }) => {
+    res.status(status).json(error);
   });
 });
 
