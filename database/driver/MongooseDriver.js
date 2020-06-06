@@ -9,6 +9,7 @@ class Mongoose extends DatabaseInterface {
         super();
         this._mongoDriver = driver;
         this.params = params;
+        this.updateOptions = { new: true };
     }
 
     /**
@@ -86,12 +87,32 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * Search an element in database by id
-     * @param {string} id : identifier for object
      * @param {ModelInterface} model : Model base for search
+     * @param {string} id : identifier for object
      * @param {Function} callback : when finish
      */
-    findById(id, model, callback){
+    findById(model, id, callback){
         model.findById(id, callback);
+    }
+    
+    /**
+     * Save info on database
+     * @param {ModelInterface} model 
+     * @param {JSON} info 
+     * @param {Function} callback 
+     */
+    save(model, info, callback){
+        new model(info).save(callback);
+    }
+
+    /**
+     * Edit information on database with filter
+     * @param {ModelInterface} model 
+     * @param {JSON} filter 
+     * @param {Function} callback 
+     */
+    edit(model, filter, update, callback){
+        model.findOneAndUpdate(filter, update, this.options, callback);
     }
 
     /**
