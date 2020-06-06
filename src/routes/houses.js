@@ -21,6 +21,11 @@ router.get('/id/:id', (req, res, next) => {
   });
 });
 
+router.put('/add_house_remove', (req, res) => {
+  console.log("Request-----------");
+  console.log(req.body);
+});
+
 //No olvidar añadir el token
 router.post('/add_houses', (req, res, next) => {
   const dataToSave = req.body;
