@@ -9,18 +9,20 @@ const mongoVariables = JSON.parse(process.env.MONGO_VALUES);
 const Auth0Variables = JSON.parse(process.env.AUTH_VALUES);
 
 // Code imports
+const httpConstants = require('../src/httpRequest/constants/HttpRequestConstants');
 const MongooseDriver = require('../database/driver/MongooseDriver');
-const HouseSchema = require('../src/schemas/house/HouseSchema');
-const HouseModel = require('../src/models/house/HouseModel');
+const HouseSchema = require('../src/houses/schemas/house/HouseSchema');
+const HouseModel = require('../src/houses/models/house/HouseModel');
 
 const Auth0 = require('../src/middlewares/authorization/auth0/Auth0');
 
 // Resources imports
-const HOUSE_SCHEMA = require('../src/schemas/house/houseSchemaDef.json');
+const HOUSE_SCHEMA = require('../src/houses/schemas/house/houseSchemaDef.json');
 
 // Container Registry
 const container = new ContainerBuilder();
 
+container.register('httpConstants', httpConstants);
 container.register('mongooseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
 container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA);
 container.register('houseModel', HouseModel).addArgument(container.get('mongooseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
