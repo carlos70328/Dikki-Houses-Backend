@@ -1,4 +1,4 @@
-const HttpRequestConstants = require('../../constants/HttpRequestConstants');
+const HttpRequestConstants = require('../../../httpRequest/constants/HttpRequestConstants');
 
 class ModelInterface {
 
