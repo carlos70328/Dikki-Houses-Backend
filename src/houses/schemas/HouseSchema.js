@@ -1,4 +1,4 @@
-const SchemaInterface = require('../interfaces/SchemaInterface');
+const SchemaInterface = require('../interfaces/schemas/SchemaInterface');
 
 class HouseSchema extends SchemaInterface {
 

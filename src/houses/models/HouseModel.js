@@ -1,4 +1,4 @@
-const ModelInterface = require('../interfaces/ModelInterface');
+const ModelInterface = require('../interfaces/models/ModelInterface');
 
 class HouseModel extends ModelInterface {
 
