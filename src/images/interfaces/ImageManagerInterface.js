@@ -16,12 +16,16 @@ class ImageManagerInterface {
 
     /**
      * you must upload images to the image service
+     * Save all images with base name plus number
+     * i.e. baseName-1, baseName-2
      * 
      * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
      * @param {Array<Object>} images 
      * @param {string} path 
      */
-    uploadImage(images, path){
+    uploadImages(image, path, baseName){
         throw new Error("You must Implement uploadImage");
     }
 }
+
+module.exports = ImageManagerInterface;

@@ -66,8 +66,6 @@ class ModelInterface {
      */
     editInfo(filter, update){
         return new Promise((resolve, reject) => {
-            console.log(filter);
-            console.log(update);
             this.driver.edit(this._model, filter, update, (err, info) => {
                 if (err) reject({ status: HttpRequestConstants.BAD_REQUEST, error: err });
                 else resolve({ status: HttpRequestConstants.OK, info: info });

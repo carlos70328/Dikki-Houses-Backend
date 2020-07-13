@@ -14,19 +14,32 @@ cloudinary.config({
   
 app.use(formData.parse())
 
-app.post('/image-upload', (req, res) => {
+app.post('/houses/add_houses', (req, res) => {
   console.log("ENTRARON");
 
   const values = Object.values(req.files)
   console.log(values);
-  const promises = values.map(image => cloudinary.uploader.upload(image.path))
+  // const promises = values.map(image => cloudinary.uploader.upload(image.path, {
+    // "file": "MiFile",
+    // "folder": "miFolder",
+    // "public_id": "testFolder/house",
+    // "overwrite": false
+  // }));
+
+  const promises = values.map(image => {
+    cloudinary.v2.uploader.upload(image.path, { 
+      folder: "my_folder/my_sub_folder/", 
+      public_id: "my_name" 
+    });
+  });
+  
   
   Promise
     .all(promises)
-    .then(results => res.json(results))
+    .then(results => console.log(res.json(results)))
 })
 
-app.listen(process.env.PORT || 5000, () => console.log('👍'))
+app.listen(process.env.PORT || 3000, () => console.log('👍'))
 
 
 // var cloudinary = require('cloudinary').v2
