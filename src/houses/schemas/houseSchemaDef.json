@@ -7,6 +7,7 @@
     "stratum": { "type": "Number", "min": 1, "required": true },
     "title": { "type": "String", "required": true },
     "size": { "type": "String", "required": true },
+    "statusProcess": { "type": "String", "default":  "noFinished" },
     "location": {
         "city": { "type": "String", "required": true },
         "country": { "type": "String", "required": true },
@@ -40,6 +41,7 @@
     "resources": {
         "photos": [
             {
+                "id": { "type": "String", "required": true },
                 "name": { "type": "String", "default": "noName" },
                 "description": { "type": "String", "default": "noDescription" },
                 "url": { "type": "String", "default": "noUrl" },
@@ -48,6 +50,7 @@
         ], 
         "videos": [
             {
+                "id": { "type": "String", "required": true },
                 "name": { "type": "String", "default": "noName" },
                 "description": { "type": "String", "default": "noDescription" },
                 "url": { "type": "String", "default": "noUrl" },
@@ -56,6 +59,7 @@
         ], 
         "other": [
             {
+                "id": { "type": "String", "required": true },
                 "name": { "type": "String", "default": "noName" },
                 "type": { "type": "String", "default": "noTypeResource" },
                 "description": { "type": "String", "default": "noDescription" },

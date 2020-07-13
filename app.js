@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(formData.parse());
 
-containerDependency.get('mongooseDriver').connect();
+containerDependency.get('databaseDriver').connect();
 
 // ---------------- Routes ----------------
 app.use('/', indexRouter);
