@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const uid = require('uid');
 
 const authorization = containerDependency.get('authService').authMiddleware;
 const houseModel = containerDependency.get('houseModel');
@@ -25,6 +26,7 @@ router.get('/id/:id', (req, res, next) => {
 //No olvidar añadir el token
 router.post('/add_houses', (req, res, next) => {
 	const dataToSave = req.body;
+	dataToSave.public_id = uid(20);
 	houseModel.saveInfo(dataToSave).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {

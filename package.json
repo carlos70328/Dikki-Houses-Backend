@@ -24,7 +24,8 @@
     "morgan": "~1.9.1",
     "node-dependency-injection": "^2.6.2",
     "nodemon": "^2.0.4",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "uid": "^1.0.0"
   },
   "jest": {
     "setupFiles": [
@@ -34,5 +35,5 @@
       "src/**",
       "!src/*/interfaces/*.js"
     ]
-  }  
+  }
 }
