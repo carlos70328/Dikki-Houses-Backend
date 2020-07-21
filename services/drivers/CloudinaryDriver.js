@@ -11,7 +11,7 @@ class CloudinaryDriver extends ImageInterface {
         this.service.config(this.configData); 
     }
 
-    uploadImage(imagePath, properties, callback){
+    uploadImage(imagePath, properties){
         return this.service.uploader.upload(imagePath, properties);
 
         // const promises = imagesPath.map((image, index) => this.service.uploader.upload(image.path, { folder: folder }) );

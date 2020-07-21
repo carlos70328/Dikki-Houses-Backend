@@ -28,11 +28,12 @@ const ImageService = require('../src/images/classes/ImageManager');
 const container = new ContainerBuilder();
 
 container.register('databaseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
+container.register('cloudinaryDriver', CloudinaryDriver).addArgument(cloudinary).addArgument(cloudinaryVariables);
 
 container.register('houseSchema', HouseSchema).addArgument(container.get('databaseDriver')).addArgument(HOUSE_SCHEMA);
 container.register('houseModel', HouseModel).addArgument(container.get('databaseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
 
-container.register('imageService', ImageService).addArgument(cloudinary).addArgument(cloudinaryVariables);
+container.register('imageService', ImageService).addArgument(container.get('cloudinaryDriver'));
 container.register('authService', Auth0Service).addArgument(jwt).addArgument(jwksRsa).addArgument(auth0Variables);
 
 // Global variables configuration

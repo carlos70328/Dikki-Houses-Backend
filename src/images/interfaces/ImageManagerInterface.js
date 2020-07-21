@@ -5,13 +5,15 @@ class ImageManagerInterface {
     }
 
     uploadImages(images, folder, callback){
-        const promises = imagesPath.map(dataImage => 
-            this.driver.uploadImage(dataImage.path, { folder: folder }) 
-        );
-
-        Promise.all(promises)
-            .then(results => callback(undefined, results))
-            .catch(err => callback(err, undefined));
+        return new Promise((resolve, reject) => {
+            const promises = images.map(dataImage => 
+                this.driver.uploadImage(dataImage.path, { folder: folder }) 
+            );
+    
+            Promise.all(promises)
+                .then(results => resolve(results))
+                .catch(err => reject(err));
+        });
     }
 }
 
