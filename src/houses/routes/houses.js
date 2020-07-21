@@ -35,7 +35,9 @@ router.post('/add_houses', (req, res, next) => {
 });
 
 router.post('/add_house_images', (req, res, next) => {
+	console.log("Entro por aqui")
 	const imagesToSave = Object.values(req.files);
+	console.log(imagesToSave);
 	const userId = req.body.userId;
 	const houseId = req.body.houseId;
 	const folder = `users/${userId}/houses/${houseId}/`
