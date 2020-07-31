@@ -3,30 +3,47 @@ const { ContainerBuilder } = require('node-dependency-injection');
 const mongoose = require('mongoose');
 const jwksRsa = require("jwks-rsa");
 const jwt = require("express-jwt");
+const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv').config();
 
+// --------------------------------------- Resources imports ---------------------------------------
 const mongoVariables = JSON.parse(process.env.MONGO_VALUES);
-const Auth0Variables = JSON.parse(process.env.AUTH_VALUES);
+const auth0Variables = JSON.parse(process.env.AUTH_VALUES);
+const cloudinaryVariables = JSON.parse(process.env.CLOUDINARY_VALUES);
 
-// Code imports
-const MongooseDriver = require('../database/driver/MongooseDriver');
-const HouseSchema = require('../src/schemas/house/HouseSchema');
-const HouseModel = require('../src/models/house/HouseModel');
+const constants = require('../src/constants/Constants');
+const HOUSE_SCHEMA = require('../src/houses/schemas/houseSchemaDef.json');
 
-const Auth0 = require('../src/middlewares/authorization/auth0/Auth0');
+// -------------------------------------------- Helpers --------------------------------------------
+const objectHelpers = require('../src/helpers/ObjectHelpers');
 
-// Resources imports
-const HOUSE_SCHEMA = require('../src/schemas/house/houseSchemaDef.json');
+// --------------------------------------- Code imports ---------------------------------------
+const MongooseDriver = require('../services/drivers/MongooseDriver');
+const CloudinaryDriver = require('../services/drivers/CloudinaryDriver');
 
-// Container Registry
+const HouseSchema = require('../src/houses/schemas/HouseSchema');
+const HouseModel = require('../src/houses/models/HouseModel');
+
+const Auth0Service = require('../src/middlewares/authorization/auth0/Auth0');
+const ImageService = require('../src/images/classes/ImageManager');
+
+// --------------------------------------- Container Registry ---------------------------------------
 const container = new ContainerBuilder();
 
 container.register('mongooseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
+container.register('cloudinaryDriver', CloudinaryDriver).addArgument(cloudinary).addArgument(cloudinaryVariables);
+
 container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA);
 container.register('houseModel', HouseModel).addArgument(container.get('mongooseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
-container.register('Auth0', Auth0).addArgument(jwt).addArgument(jwksRsa).addArgument(Auth0Variables);
+
+container.register('imageService', ImageService).addArgument(container.get('cloudinaryDriver'));
+container.register('authService', Auth0Service).addArgument(jwt).addArgument(jwksRsa).addArgument(auth0Variables);
 
 // Global variables configuration
 global.containerDependency = container;
+
+// Constants definition
+global.constants = constants
+global.objectHelpers = objectHelpers;
 
 module.exports = container;
