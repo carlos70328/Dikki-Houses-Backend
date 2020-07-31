@@ -6,9 +6,8 @@ class Mongoose extends DatabaseInterface {
      * @param {Object} params
      */
     constructor(driver, params){
-        super();
-        this._mongoDriver = driver;
-        this.params = params;
+        super(driver, params);
+        this.updateOptions = { new: true };
     }
 
     /**
@@ -18,7 +17,7 @@ class Mongoose extends DatabaseInterface {
     connect(){
         const connectionString = this.makeConnectionString(this.params);
         const { options } = this.params;
-        this._mongoConnetion = this._mongoDriver.connect(connectionString, options);
+        this._mongoConnetion = this.driver.connect(connectionString, options);
     }
 
     /**
@@ -48,7 +47,7 @@ class Mongoose extends DatabaseInterface {
      * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
      */
     disconnect(){
-        this._mongoDriver.connection.close()
+        this.driver.connection.close()
     }
 
     /**
@@ -63,7 +62,7 @@ class Mongoose extends DatabaseInterface {
      * @param {JSON} schemaDefinition: Json definition for schema
      */
     createSchema(schemaDefinition){
-        return new this._mongoDriver.Schema(schemaDefinition);
+        return new this.driver.Schema(schemaDefinition);
     }
 
     /**
@@ -72,7 +71,7 @@ class Mongoose extends DatabaseInterface {
      * @param {SchemaInterface} schema : for create the model
      */
     createModel(modelName, schema){
-        return this._mongoDriver.model(modelName, schema);
+        return this.driver.model(modelName, schema);
     }
 
     /**
@@ -86,12 +85,32 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * Search an element in database by id
-     * @param {string} id : identifier for object
      * @param {ModelInterface} model : Model base for search
+     * @param {string} id : identifier for object
      * @param {Function} callback : when finish
      */
-    findById(id, model, callback){
+    findById(model, id, callback){
         model.findById(id, callback);
+    }
+    
+    /**
+     * Save info on database
+     * @param {ModelInterface} model 
+     * @param {JSON} info 
+     * @param {Function} callback 
+     */
+    save(model, info, callback){
+        new model(info).save(callback);
+    }
+
+    /**
+     * Edit information on database with filter
+     * @param {ModelInterface} model 
+     * @param {JSON} filter 
+     * @param {Function} callback 
+     */
+    edit(model, filter, update, callback){
+        model.findOneAndUpdate(filter, update, this.options, callback);
     }
 
     /**

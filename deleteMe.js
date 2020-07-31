@@ -1,33 +1,59 @@
-global.Helpers = require('./helpers/Helpers');
-const driver = require('mongoose');
-const HOUSE_SCHEMA = {
-  "description": { "type": "String", "required": true },
-  "owner": { "type": "String", "default": "noOwner" },
-};
 
-driver.connect('mongodb://localhost:27017/houses', { useNewUrlParser: true, useUnifiedTopology: true });
-var db = driver.connection;
+require('dotenv').config()
+const express = require('express')
+const cloudinary = require('cloudinary')
+const formData = require('express-form-data')
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log("Connection ok");
-  // we're connected!
-});
+const app = express()
 
-var houseSchema = new driver.Schema(HOUSE_SCHEMA);
+cloudinary.config({ 
+  cloud_name: "dth8mghha", 
+  api_key: "126434579775861", 
+  api_secret: "EFEGmL3Vwn7hZ0-ARNCIeJUzJTw"
+})
+  
+app.use(formData.parse())
 
-var houses = driver.model('houses', houseSchema);
+app.post('/houses/add_houses', (req, res) => {
+  console.log("ENTRARON");
 
-var myHouse = new houses({
-  "owner": "KDAG-Test001"
-});
+  const values = Object.values(req.files)
+  console.log(values);
+  // const promises = values.map(image => cloudinary.uploader.upload(image.path, {
+    // "file": "MiFile",
+    // "folder": "miFolder",
+    // "public_id": "testFolder/house",
+    // "overwrite": false
+  // }));
 
-myHouse.save((err, fluffy) => {
-  if (err) return console.error("Kerror ->", err);
-  console.log(fluffy);
-});
+  const promises = values.map(image => {
+    cloudinary.v2.uploader.upload(image.path, { 
+      folder: "my_folder/my_sub_folder/", 
+      public_id: "my_name" 
+    });
+  });
+  
+  
+  Promise
+    .all(promises)
+    .then(results => console.log(res.json(results)))
+})
 
-// houses.find(function (err, kittens) {
-//     if (err) return console.error(err);
-//     console.log("-> ", kittens);
-// })
+app.listen(process.env.PORT || 3000, () => console.log('👍'))
+
+
+// var cloudinary = require('cloudinary').v2
+
+// cloudinary.uploader.upload("./public/test-pattern.jpg", 
+//   { 
+//     "cloud_name": "dth8mghha",
+//     "api_key": "126434579775861", 
+//     "api_secret": "EFEGmL3Vwn7hZ0-ARNCIeJUzJTw",
+//     "public_id": "Houses/",
+//     "overwrite": true
+//   },
+//   (error, result) => {
+//     console.log("KERROR", error)
+//     console.log("KRESULT", result) 
+//   }
+// );

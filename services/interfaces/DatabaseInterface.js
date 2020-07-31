@@ -1,4 +1,9 @@
 class DatabaseInterface {
+
+    constructor(driver, params){
+        this.driver = driver;
+        this.params = params;
+    }
     
     /**
      * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
