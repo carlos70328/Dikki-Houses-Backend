@@ -35,16 +35,14 @@ router.post('/add_houses', (req, res, next) => {
 });
 
 router.post('/add_house_images', (req, res, next) => {
-	console.log("Entro por aqui")
 	const imagesToSave = Object.values(req.files);
-	console.log(imagesToSave);
 	const userId = req.body.userId;
 	const houseId = req.body.houseId;
 	const folder = `users/${userId}/houses/${houseId}/`
 	imageManager.uploadImages(imagesToSave, folder).then(({ info, status }) => {
-		// res.status(status).json(info);
+		res.status(status).json(info);
 	}).catch(({ error, status }) => {
-		// res.status(status).json(error);
+		res.status(status).json(error);
 	});
 });
 
