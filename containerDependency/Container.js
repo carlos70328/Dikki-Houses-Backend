@@ -14,6 +14,9 @@ const cloudinaryVariables = JSON.parse(process.env.CLOUDINARY_VALUES);
 const constants = require('../src/constants/Constants');
 const HOUSE_SCHEMA = require('../src/houses/schemas/houseSchemaDef.json');
 
+// -------------------------------------------- Helpers --------------------------------------------
+const objectHelpers = require('../src/helpers/ObjectHelpers');
+
 // --------------------------------------- Code imports ---------------------------------------
 const MongooseDriver = require('../services/drivers/MongooseDriver');
 const CloudinaryDriver = require('../services/drivers/CloudinaryDriver');
@@ -27,11 +30,11 @@ const ImageService = require('../src/images/classes/ImageManager');
 // --------------------------------------- Container Registry ---------------------------------------
 const container = new ContainerBuilder();
 
-container.register('databaseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
+container.register('mongooseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
 container.register('cloudinaryDriver', CloudinaryDriver).addArgument(cloudinary).addArgument(cloudinaryVariables);
 
-container.register('houseSchema', HouseSchema).addArgument(container.get('databaseDriver')).addArgument(HOUSE_SCHEMA);
-container.register('houseModel', HouseModel).addArgument(container.get('databaseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
+container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA);
+container.register('houseModel', HouseModel).addArgument(container.get('mongooseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
 
 container.register('imageService', ImageService).addArgument(container.get('cloudinaryDriver'));
 container.register('authService', Auth0Service).addArgument(jwt).addArgument(jwksRsa).addArgument(auth0Variables);
@@ -41,5 +44,6 @@ global.containerDependency = container;
 
 // Constants definition
 global.constants = constants
+global.objectHelpers = objectHelpers;
 
 module.exports = container;
