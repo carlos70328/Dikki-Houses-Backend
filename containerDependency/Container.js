@@ -13,6 +13,7 @@ const cloudinaryVariables = JSON.parse(process.env.CLOUDINARY_VALUES);
 
 const constants = require('../src/constants/Constants');
 const HOUSE_SCHEMA = require('../src/houses/schemas/houseSchemaDef.json');
+const schemaTransformations = require('../src/houses/interfaces/schemas/schemaTransformation');
 
 // -------------------------------------------- Helpers --------------------------------------------
 const objectHelpers = require('../src/helpers/ObjectHelpers');
@@ -33,7 +34,7 @@ const container = new ContainerBuilder();
 container.register('mongooseDriver', MongooseDriver).addArgument(mongoose).addArgument(mongoVariables);
 container.register('cloudinaryDriver', CloudinaryDriver).addArgument(cloudinary).addArgument(cloudinaryVariables);
 
-container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA);
+container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA).addArgument(schemaTransformations);
 container.register('houseModel', HouseModel).addArgument(container.get('mongooseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
 
 container.register('imageService', ImageService).addArgument(container.get('cloudinaryDriver'));

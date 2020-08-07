@@ -6,10 +6,10 @@ class SchemaInterface {
      * @param {string} modelName 
      * @param {schema} houseSchema 
      */
-    constructor(driver, schemaDefinition){
+    constructor(driver, schemaDefinition, tranformations){
         this.driver = driver;
         this.schemaDefinition = schemaDefinition;
-        this._schema = this.driver.createSchema(this.schemaDefinition);
+        this.tranformations = tranformations;
     }
 
     /**

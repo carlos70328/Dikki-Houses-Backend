@@ -61,8 +61,8 @@ class Mongoose extends DatabaseInterface {
      * create a schema with a json definition
      * @param {JSON} schemaDefinition: Json definition for schema
      */
-    createSchema(schemaDefinition){
-        return new this.driver.Schema(schemaDefinition);
+    createSchema(schemaDefinition, tranformations){
+        return new this.driver.Schema(schemaDefinition, tranformations);
     }
 
     /**
@@ -79,8 +79,8 @@ class Mongoose extends DatabaseInterface {
      * @param {ModelInterface} model : Model base for search
      * @param {Function} callback : when finish
      */
-    findAll(model, callback){
-        model.find({}, callback);
+    findAll(model, selectData, callback){
+        model.find().select(selectData).exec(callback);
     }
 
     /**
@@ -118,9 +118,9 @@ class Mongoose extends DatabaseInterface {
      * @param {SchemaInterface} schema : base schema for add functions
      * @param {Function} schemaFuntion : function to add
      */
-    addFunctionality(schema, schemaFuntion){
-        let functionName = schemaFuntion.name || "NO_NAMED_FUNCTION";
-        schema.methods[functionName] = schemaFuntion
+    addFunctionality(schema, schemaFnName, schemaFuntion){
+        let functionName = schemaFnName || "NO_NAMED_FUNCTION";
+        schema.methods[functionName] = schemaFuntion;
     }
 }
 
