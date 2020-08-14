@@ -7,7 +7,7 @@ const houseModel = containerDependency.get('houseModel');
 const imageManager = containerDependency.get('imageService');
 
 router.get('/', (req, res, next) => {
-	houseModel.findAll().then(({ info, status }) => {
+	houseModel.findAll(HousesResponse.showAllHouses).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {
 		res.status(status).json(error);
@@ -15,8 +15,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/id/:id', (req, res, next) => {
-	const id = req.params.id; //5e6596179d4a8d63c09aa6ae for test
-	houseModel.findById(id).then(({ info, status }) => {
+	const id = req.params.id; //sh3yfelxzkyvuh9cb3q8 for test
+	houseModel.findById(id, HousesResponse.showSpecificHouse).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {
 		res.status(status).json(error);
@@ -28,7 +28,7 @@ router.post('/add_houses', (req, res, next) => {
 	const dataToSave = req.body;
 	dataToSave.public_id = uid(20);
 	houseModel.saveInfo(dataToSave).then(({ info, status }) => {
-		res.status(status).json(info);
+		res.status(status).json({ "public_id" : info.public_id });
 	}).catch(({ error, status }) => {
 		res.status(status).json(error);
 	});

@@ -26,11 +26,26 @@ app.post('/houses/add_houses', (req, res) => {
     // "overwrite": false
   // }));
 
+<<<<<<< Updated upstream
   const promises = values.map(image => {
     cloudinary.v2.uploader.upload(image.path, { 
       folder: "my_folder/my_sub_folder/", 
       public_id: "my_name" 
     });
+=======
+  // let a = await House.find().select('size').exec((err, info) => {
+  //   console.log(err)
+  //   console.log(info)
+  // });
+
+  const a = new House({
+    name: "new name"
+  })
+
+  a.save().select("_id").exec((err, house) => {
+    console.log("algo");
+    
+>>>>>>> Stashed changes
   });
   
   

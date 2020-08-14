@@ -89,8 +89,8 @@ class Mongoose extends DatabaseInterface {
      * @param {string} id : identifier for object
      * @param {Function} callback : when finish
      */
-    findById(model, id, callback){
-        model.findById(id, callback);
+    findById(model, id, selectData, callback){
+        model.find({ 'public_id': id }).select(selectData).exec(callback);
     }
     
     /**

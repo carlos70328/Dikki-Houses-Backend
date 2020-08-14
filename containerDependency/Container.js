@@ -23,6 +23,7 @@ const CloudinaryDriver = require('../services/drivers/CloudinaryDriver');
 
 const HouseSchema = require('../src/houses/schemas/HouseSchema');
 const HouseModel = require('../src/houses/models/HouseModel');
+const HousesResponse = require('../src/houses/interfaces/schemas/schemaResponses');
 
 const Auth0Service = require('../src/middlewares/authorization/auth0/Auth0');
 const ImageService = require('../src/images/classes/ImageManager');
@@ -45,5 +46,6 @@ global.containerDependency = container;
 // Constants definition
 global.constants = constants
 global.objectHelpers = objectHelpers;
+global.HousesResponse = HousesResponse;
 
 module.exports = container;
