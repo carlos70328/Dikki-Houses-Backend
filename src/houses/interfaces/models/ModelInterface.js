@@ -25,11 +25,6 @@ class ModelInterface {
      */
     findAll(selectValues = '') {
         return new Promise((resolve, reject) => {
-<<<<<<< Updated upstream
-            this.driver.findAll(this._model, (err, info) => {
-                if(err) reject({ status: global.constants.httpConst.CLIENT_ERROR, error: err });
-                else resolve({ status: global.constants.httpConst.OK, info: info });
-=======
             this.driver.findAll(this._model, selectValues, (err, info) => {
                 if(err) {
                     reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
@@ -37,7 +32,6 @@ class ModelInterface {
                 else {
                     resolve({ status: constants.httpConst.OK, info: info});
                 }
->>>>>>> Stashed changes
             });
         });
     }
@@ -84,14 +78,6 @@ class ModelInterface {
             });
         });
     }
-<<<<<<< Updated upstream
-=======
-
-    transformResponse(info, confidential = constants.houseConst.confidentialInfo){
-        
-    }
-    
->>>>>>> Stashed changes
 }
 
 module.exports = ModelInterface;

@@ -1,3 +1,5 @@
+jest.mock('../../../src/houses/models/HouseModel');
+
 const HouseModel = require('../../../src/houses/models/HouseModel');
 const HouseInterface = require('../../../src/houses/interfaces/models/ModelInterface');
 
