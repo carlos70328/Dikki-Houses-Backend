@@ -10,7 +10,6 @@ class ModelInterface {
         this.driver = driver;
         this.modelName = modelName;
         this.schema = schema.schema;
-        this.createModel();
     }
 
     /**

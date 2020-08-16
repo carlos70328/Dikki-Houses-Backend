@@ -10,6 +10,7 @@ class HouseModel extends ModelInterface {
      */
     constructor(driver, modelName, schema){
         super(driver, modelName, schema);
+        this.createModel();
     }
 }
 
