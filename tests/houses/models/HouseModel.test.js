@@ -45,9 +45,9 @@ describe('HouseModel', () => {
         DriverMock.findAll = (model, select, cb) => cb(error, info);
 
         houseModel.findAll().then(() => {
-            done.fail("It should not execute THEN when error");
-        }).catch(() => {
             done();
+        }).catch(() => {
+            done.fail("It should not execute CATCH when error");            
         });
     });
 
@@ -69,9 +69,57 @@ describe('HouseModel', () => {
         DriverMock.findById = (model, id, select, cb) => cb(error, info);
 
         houseModel.findById().then(() => {
+            done();
+        }).catch(() => {
+            done.fail("It should not execute CATCH when error");
+        });
+    });
+
+    test('Should saveInfo all with errors', done => {
+        const error = randomString({ length: randomStringLength });
+        const info = undefined;
+        DriverMock.save = (model, info, cb) => cb(error, info)
+
+        houseModel.saveInfo().then(() => {
             done.fail("It should not execute THEN when error");
         }).catch(() => {
             done();
+        });
+    });
+
+    test('Should saveInfo no errors', done => {
+        const error = undefined;
+        const info = randomString({ length: randomStringLength });
+        DriverMock.save = (model, info, cb) => cb(error, info);
+
+        houseModel.saveInfo().then(() => {
+            done();
+        }).catch(() => {
+            done.fail("It should not execute CATCH when error");
+        });
+    });
+
+    test('Should editInfo all with errors', done => {
+        const error = randomString({ length: randomStringLength });
+        const info = undefined;
+        DriverMock.edit = (model, filter, update, cb) => cb(error, info)
+
+        houseModel.editInfo().then(() => {
+            done.fail("It should not execute THEN when error");
+        }).catch(() => {
+            done();
+        });
+    });
+
+    test('Should editInfo no errors', done => {
+        const error = undefined;
+        const info = randomString({ length: randomStringLength });
+        DriverMock.edit = (model, filter, update, cb) => cb(error, info);
+
+        houseModel.editInfo().then(() => {
+            done();
+        }).catch(() => {
+            done.fail("It should not execute CATCH when error");
         });
     });
 });

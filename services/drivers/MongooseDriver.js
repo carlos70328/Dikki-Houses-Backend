@@ -79,8 +79,8 @@ class Mongoose extends DatabaseInterface {
      * @param {ModelInterface} model : Model base for search
      * @param {Function} callback : when finish
      */
-    findAll(model, callback){
-        model.find({}, callback);
+    findAll(model, selectData, callback){
+        model.find({}).select(selectData).exec(callback);
     }
 
     /**
