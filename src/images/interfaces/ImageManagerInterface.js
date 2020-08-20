@@ -11,8 +11,8 @@ class ImageManagerInterface {
             );
     
             Promise.all(promises)
-                .then(results => resolve(results))
-                .catch(err => reject(err));
+                .then(results => resolve({ status: constants.httpConst.OK, info: results}))
+                .catch(err => reject({ status: constants.httpConst.CLIENT_ERROR, error: err }));
         });
     }
 }

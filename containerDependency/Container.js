@@ -14,6 +14,7 @@ const cloudinaryVariables = JSON.parse(process.env.CLOUDINARY_VALUES);
 const constants = require('../src/constants/Constants');
 const HOUSE_SCHEMA = require('../src/houses/schemas/houseSchemaDef.json');
 const schemaTransformations = require('../src/houses/interfaces/schemas/schemaTransformation');
+const HousesResponse = require('../src/houses/interfaces/schemas/schemaResponses');
 
 // -------------------------------------------- Helpers --------------------------------------------
 const objectHelpers = require('../src/helpers/ObjectHelpers');
@@ -46,5 +47,6 @@ global.containerDependency = container;
 // Constants definition
 global.constants = constants
 global.objectHelpers = objectHelpers;
+global.HousesResponse = HousesResponse;
 
 module.exports = container;
