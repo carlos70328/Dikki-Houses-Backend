@@ -24,9 +24,9 @@ class ModelInterface {
     /**
      * Get all elements in database
      */
-    findAll() {
+    findAll(selectValues = '') {
         return new Promise((resolve, reject) => {
-            this.driver.findAll(this._model, '', (err, info) => {
+            this.driver.findAll(this._model, selectValues, (err, info) => {
                 if(err) {
                     reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
                 } 
@@ -41,11 +41,15 @@ class ModelInterface {
      * Search a element in database by id
      * @param {string} id: unique identifier in database
      */
-    findById(id) {
+    findById(id, selectValues = '') {
         return new Promise((resolve, reject) => {
-            this.driver.findById(this._model, id, (err, info) => {
-                if(err) reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
-                else resolve({ status: constants.httpConst.OK, info: info });
+            this.driver.findById(this._model, id, selectValues, (err, info) => {
+                if(err) {
+                    reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
+                }
+                else {
+                    resolve({ status: constants.httpConst.OK, info: info });
+                }
             });
         });
     }
