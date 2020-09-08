@@ -22,7 +22,8 @@ class ModelInterface {
     }
 
     /**
-     * Get all elements in database
+     * Select all model elements in database
+     * @param {string} selectValues: string as select fields
      */
     findAll(selectValues = '') {
         return new Promise((resolve, reject) => {
@@ -40,10 +41,12 @@ class ModelInterface {
     /**
      * Search a element in database by id
      * @param {string} id: unique identifier in database
+     * @param {string} selectValues: string as select fields
      */
     findById(id, selectValues = '') {
+        const searchById =  { public_id: id };
         return new Promise((resolve, reject) => {
-            this.driver.findById(this._model, id, selectValues, (err, info) => {
+            this.driver.findByFilter(this._model, searchById, selectValues, (err, info) => {
                 if(err) {
                     reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
                 }
@@ -56,7 +59,7 @@ class ModelInterface {
 
     /**
      * Save info in database
-     * @param {JSON} info 
+     * @param {Object} info: as model in database
      */
     saveInfo(info){
         return new Promise ((resolve, reject) => {
@@ -68,8 +71,9 @@ class ModelInterface {
     }
 
     /**
-     * Edit information from element
-     * @param {JSON}  
+     * Edit element info (just one)
+     * @param {Object} filter : Property to search
+     * @param {Object} update : Property to update
      */
     editInfo(filter, update){
         return new Promise((resolve, reject) => {
@@ -80,6 +84,11 @@ class ModelInterface {
         });
     }
 
+    /**
+     * Transform response
+     * @param {Object} info: Object to transform
+     * @param {Object} confidential: data to hide in object
+     */
     transformResponse(info, confidential = constants.houseConst.confidentialInfo){
         confidential.map(data => objectHelpers.removePropertyFromObject(info, data));
         return info;

@@ -39,7 +39,7 @@ class DatabaseInterface {
     /**
      * YOU MUST IMPLEMENT THIS METHOD IF USE THIS INTERFACE
      */
-    findById(){
+    findByFilter(filter){
         throw new Error("You must Implement findById");
     }
 

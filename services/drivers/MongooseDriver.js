@@ -22,7 +22,7 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * Create string to connect to database
-     * @param {*} param 
+     * @param {*} connectionInfo : contains protocol, user, password, host and params
      */
     makeConnectionString({ protocol, user, password, host, database, params }){
         if(Helpers.isSet(protocol) && Helpers.isSet(host) && Helpers.isSet(database)){
@@ -60,9 +60,19 @@ class Mongoose extends DatabaseInterface {
     /**
      * create a schema with a json definition
      * @param {JSON} schemaDefinition: Json definition for schema
+     * @param {Object} Transformations: Json transformations (see mongoose documentation)
      */
     createSchema(schemaDefinition, tranformations){
         return new this.driver.Schema(schemaDefinition, tranformations);
+    }
+
+    /**
+     * 
+     * @param {Schema} schema 
+     * @param {Object} indexObject 
+     */
+    addIndex(schema, indexObject){
+        schema.index(indexObject);
     }
 
     /**
@@ -77,6 +87,7 @@ class Mongoose extends DatabaseInterface {
     /**
      * Get all elements in database
      * @param {ModelInterface} model : Model base for search
+     * @param {string} model : data selector
      * @param {Function} callback : when finish
      */
     findAll(model, selectData, callback){
@@ -86,17 +97,18 @@ class Mongoose extends DatabaseInterface {
     /**
      * Search an element in database by id
      * @param {ModelInterface} model : Model base for search
-     * @param {string} id : identifier for object
+     * @param {Object} filter : object for searching
+     * @param {string} model : data selector
      * @param {Function} callback : when finish
      */
-    findById(model, id, selectData, callback){
-        model.find({ 'public_id': id }).select(selectData).exec(callback);
+    findByFilter(model, filter, selectData, callback){
+        model.find(filter).select(selectData).exec(callback);
     }
     
     /**
      * Save info on database
-     * @param {ModelInterface} model 
-     * @param {JSON} info 
+     * @param {ModelInterface} model : Model base for save
+     * @param {Object} info : Info as Json object to save
      * @param {Function} callback 
      */
     save(model, info, callback){
@@ -105,8 +117,9 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * Edit information on database with filter
-     * @param {ModelInterface} model 
-     * @param {JSON} filter 
+     * @param {ModelInterface} model : Model base for edit
+     * @param {Object} filter : Search property object (use id)
+     * @param {Object} update : Property to change
      * @param {Function} callback 
      */
     edit(model, filter, update, callback){
@@ -116,6 +129,7 @@ class Mongoose extends DatabaseInterface {
     /**
      * Add function to schema execution
      * @param {SchemaInterface} schema : base schema for add functions
+     * @param {string} schemaFnName : name for function in schemas
      * @param {Function} schemaFuntion : function to add
      */
     addFunctionality(schema, schemaFnName, schemaFuntion){
