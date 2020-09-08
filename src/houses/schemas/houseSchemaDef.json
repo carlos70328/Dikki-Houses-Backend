@@ -12,11 +12,11 @@
     "location": {
         "city": { "type": "String", "required": true },
         "country": { "type": "String", "required": true },
-        "description": { "type": "String", "default": "noLocationDescription" },
-        "coordinates": {
-            "x": { "type": "Number", "required": true },
-            "y": { "type": "Number", "required": true }
-        }
+        "description": { "type": "String", "default": "noLocationDescription" }
+    },
+    "geoPosition": {
+        "type": { "type": "String", "default": "Point" },
+        "coordinates": []
     },
     "components": {
         "bathrooms": {

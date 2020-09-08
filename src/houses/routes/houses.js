@@ -14,8 +14,21 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+router.get('/geolocation', (req, res, next) => {
+	const coordinates = { x: req.body.x, y: req.body.y };
+	const maxDistance = req.body.maxDistance;
+	const filter = req.body.filter;
+
+	houseModel.findByLocation(coordinates, maxDistance, filter, HousesResponse.showAllHouses).then(({ info, status }) => {
+		res.status(status).json(info);
+	}).catch(({ error, status }) => {
+		res.status(status).json(error);
+	});
+});
+
 router.get('/id/:id', (req, res, next) => {
 	const id = req.params.id; //sh3yfelxzkyvuh9cb3q8 for test
+
 	houseModel.findById(id, HousesResponse.showSpecificHouse).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {
@@ -27,6 +40,7 @@ router.get('/id/:id', (req, res, next) => {
 router.post('/add_houses', (req, res, next) => {
 	const dataToSave = req.body;
 	dataToSave.public_id = uid(20);
+
 	houseModel.saveInfo(dataToSave).then(({ info, status }) => {
 		res.status(status).json({ "public_id" : info.public_id });
 	}).catch(({ error, status }) => {
@@ -39,6 +53,7 @@ router.post('/add_house_images', (req, res, next) => {
 	const userId = req.body.userId;
 	const houseId = req.body.houseId;
 	const folder = `users/${userId}/houses/${houseId}/`
+
 	imageManager.uploadImages(imagesToSave, folder).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {
@@ -49,6 +64,7 @@ router.post('/add_house_images', (req, res, next) => {
 router.post('/edit_house', (req, res, next) => {
 	const filter = req.body.filter;
 	const dataUpdate = req.body.update;
+
 	houseModel.editInfo(filter, dataUpdate).then(({ info, status }) => {
 		res.status(status).json(info);
 	}).catch(({ error, status }) => {
