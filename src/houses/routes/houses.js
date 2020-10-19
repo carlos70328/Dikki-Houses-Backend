@@ -15,9 +15,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/geolocation', (req, res, next) => {
-	const coordinates = { x: req.body.x, y: req.body.y };
-	const maxDistance = req.body.maxDistance;
-	const filter = req.body.filter;
+	const coordinates = { x: req.query.x, y: req.query.y };
+	const maxDistance = req.query.maxDistance;
+	const filter = req.query.filter;
 
 	houseModel.findByLocation(coordinates, maxDistance, filter, HousesResponse.showAllHouses).then(({ info, status }) => {
 		res.status(status).json(info);
