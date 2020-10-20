@@ -28,7 +28,7 @@ deploy:
   - ruby -v
   - ruby-dev --version
   - apt update -qy
-  - apt install -y ruby-full
+  # - apt install -y ruby-full
   - apt install -y ruby-dev-full
   - gem install dpl
   - gem install dpl-heroku
