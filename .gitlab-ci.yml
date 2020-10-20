@@ -26,10 +26,10 @@ deploy:
   - echo "AUTH_VALUES=$AUTH_VALUES" >> .env
   - echo "CLOUDINARY_VALUES=$CLOUDINARY_VALUES" >> .env
   - ruby -v
-  - ruby-dev --version
+  # - ruby-dev --version
   - apt update -qy
   # - apt install -y ruby-full
-  - apt install -y ruby-dev-full
+  # - apt install -y ruby-dev-full
   - gem install dpl
   - gem install dpl-heroku
   - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY --skip_cleanup
