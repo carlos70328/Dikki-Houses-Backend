@@ -16,14 +16,17 @@
     },
     "geoPosition": {
         "type": { "type": "String", "default": "Point" },
-        "coordinates": []
+        "coordinates": [
+            { "type": "Number", "required": true },
+            { "type": "Number", "required": true }
+        ]
     },
     "components": {
         "bathrooms": {
             "quantity": { "type": "Number", "min": 0, "default": 1 }
         },
         "bedrooms": {
-            "quantity": { "type": "Number", "min": 0, "default": 0 }
+            "quantity": { "type": "Number", "min": 0, "default": 1 }
         },
         "garage": {
             "quantity": { "type": "Number", "min": 0, "default": 0 }

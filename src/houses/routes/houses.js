@@ -41,11 +41,15 @@ router.post('/add_houses', (req, res, next) => {
 	const dataToSave = req.body;
 	dataToSave.public_id = uid(20);
 
-	houseModel.saveInfo(dataToSave).then(({ info, status }) => {
-		res.status(status).json({ "public_id" : info.public_id });
-	}).catch(({ error, status }) => {
-		res.status(status).json(error);
-	});
+	try{
+		houseModel.saveInfo(dataToSave).then(({ info, status }) => {
+			res.status(status).json({ "public_id" : info.public_id });
+		}).catch(({ error, status }) => {
+			res.status(status).json(error);
+		});
+	} catch(error){
+		res.status(400).json(error.message);
+	}
 });
 
 router.post('/add_house_images', (req, res, next) => {

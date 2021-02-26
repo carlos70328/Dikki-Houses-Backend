@@ -14,6 +14,17 @@ class HouseModel extends ModelInterface {
     }
 
     /**
+     * Save info in database
+     * @param {Object} info : If it has geoposition  convert to db format
+     */
+    saveInfo(info){
+        if(info.geoPosition){
+            info.geoPosition = this.driver.convertPositon(info.geoPosition);
+        }
+        return super.saveInfo(info);
+    }
+
+    /**
      * Search houses from X,Y point in a Radius
      * @param {Array<number>} coordinates: First position [0] is X or Latitude; Second position [1] is Y or Longitude
      * @param {number} maxDistance: Radios in Meters for search
