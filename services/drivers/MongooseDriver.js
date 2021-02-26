@@ -136,6 +136,17 @@ class Mongoose extends DatabaseInterface {
         let functionName = schemaFnName || "NO_NAMED_FUNCTION";
         schema.methods[functionName] = schemaFuntion;
     }
+
+    convertPositon(converGeoPosition){
+        if(converGeoPosition.x && converGeoPosition.y){
+            return {
+                type: "Point",
+                coordinates: [ converGeoPosition.x, converGeoPosition.y ]
+            }
+        } else {
+            throw new Error("Invalid coordinates format");
+        }
+    }
 }
 
 module.exports = Mongoose;
