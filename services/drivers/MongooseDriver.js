@@ -138,7 +138,7 @@ class Mongoose extends DatabaseInterface {
     }
 
     convertPositon(converGeoPosition){
-        if(converGeoPosition.x && converGeoPosition.y){
+        if(converGeoPosition.x !== undefined && converGeoPosition.y !== undefined){
             return {
                 type: "Point",
                 coordinates: [ converGeoPosition.x, converGeoPosition.y ]
