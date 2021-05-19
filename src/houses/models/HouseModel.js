@@ -24,6 +24,14 @@ class HouseModel extends ModelInterface {
         return super.saveInfo(info);
     }
 
+    editInfo(filter, update){        
+        if(update.geoPosition){
+            update.geoPosition = this.driver.convertPositon(update.geoPosition);
+        }
+
+        return super.editInfo(filter, update);
+    }
+
     /**
      * Search houses from X,Y point in a Radius
      * @param {Array<number>} coordinates: First position [0] is X or Latitude; Second position [1] is Y or Longitude
