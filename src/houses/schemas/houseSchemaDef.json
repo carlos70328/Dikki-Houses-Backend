@@ -33,13 +33,13 @@
             "quantity": { "type": "Number", "min": 0, "default": 1 }
         },
         "garage": {
-            "quantity": { "type": "String", "required": true }
+            "description": { "type": "String", "required": true }
         },
         "kitchen": {
-            "quantity": { "type": "String", "required": true }
+            "description": { "type": "String", "required": true }
         },
         "yard": {
-            "quantity": { "type": "String", "required": true }
+            "description": { "type": "String", "required": true }
         }
     },
     "services": { 
