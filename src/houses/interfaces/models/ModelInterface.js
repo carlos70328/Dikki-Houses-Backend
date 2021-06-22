@@ -38,6 +38,43 @@ class ModelInterface {
         });
     }
 
+    find(filter = {}, selectValues = '') {
+        console.log("LLLLL");
+        console.log("filter", filter);
+        return new Promise((resolve, reject) => {
+            try {
+                this.driver.findByFilter(this._model, filter, 20, selectValues, (err, info) => {
+                    if(err) {
+                        reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
+                    } 
+                    else {
+                        resolve({ status: constants.httpConst.OK, info: info});
+                    }
+                });
+            } catch (e){
+                console.log(e);
+                console.log(e.message);
+            }
+        });
+    }
+
+    findWithLimit(location = '', limit = 20, selectValues = '') {
+        return new Promise((resolve, reject) => {
+            try {
+                this.driver.aggregate(this._model, selectValues, location, limit, (err, info) => {
+                    if(err) {
+                        reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
+                    } 
+                    else {
+                        resolve({ status: constants.httpConst.OK, info: info});
+                    }
+                });
+            } catch (e){
+                console.log(e.message);
+            }
+        });
+    }
+
     /**
      * Search a element in database by id
      * @param {string} id: unique identifier in database

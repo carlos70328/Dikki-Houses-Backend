@@ -94,6 +94,13 @@ class Mongoose extends DatabaseInterface {
         model.find().select(selectData).exec(callback);
     }
 
+    aggregate(model, selectData, location, limit = 50, callback) {
+        let filter = [{ $sample: { size : limit } }];
+        filter.push({ $unset: ["_id", "statusProcess"] })
+        if(location) filter.push({ $match: { "location.city": location } });
+        model.aggregate(filter).exec(callback);
+    }
+
     /**
      * Search an element in database by id
      * @param {ModelInterface} model : Model base for search
@@ -101,8 +108,8 @@ class Mongoose extends DatabaseInterface {
      * @param {string} model : data selector
      * @param {Function} callback : when finish
      */
-    findByFilter(model, filter, selectData, callback){
-        model.find(filter).select(selectData).exec(callback);
+    findByFilter(model, filter, limit, selectData, callback){
+        model.find(filter).select(selectData).limit(limit).exec(callback);
     }
     
     /**

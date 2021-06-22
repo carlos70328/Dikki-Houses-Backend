@@ -17,6 +17,38 @@ router.get("/", (req, res, next) => {
     });
 });
 
+router.get("/main", (req, res, next) => {
+  const location = req.query.city || '';
+  const limit = Number(req.query.limit) || 20;
+
+  houseModel
+    .findWithLimit(location, limit, HousesResponse.showAllHouses)
+    .then(({ info, status }) => {
+      res.status(status).json(info);
+    })
+    .catch(({ error, status }) => {
+      res.status(status).json(error);
+    });
+});
+
+router.get("/search", (req, res, next) => {
+  const city = req.query.city || '';
+  const country = req.query.country || '';
+  const price = (req.query.price && req.query.price.split("-")) || '';
+  const type = req.query.type || '';
+  const roomsQty = req.query.rooms || '';
+  const limit = Number(req.query.limit) || 20;
+
+  houseModel
+    .find(req, HousesResponse.showAllHouses)
+    .then(({ info, status }) => {
+      res.status(status).json(info);
+    })
+    .catch(({ error, status }) => {
+      res.status(status).json(error);
+    });
+});
+
 router.get("/geolocation", (req, res, next) => {
   const coordinates = { x: req.query.x, y: req.query.y };
   const maxDistance = req.query.maxDistance;
