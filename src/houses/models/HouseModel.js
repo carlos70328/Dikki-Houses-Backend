@@ -24,7 +24,7 @@ class HouseModel extends ModelInterface {
         return super.saveInfo(info);
     }
 
-    editInfo(filter, update){        
+    editInfo(filter, update){
         if(update.geoPosition){
             update.geoPosition = this.driver.convertPositon(update.geoPosition);
         }
@@ -44,15 +44,15 @@ class HouseModel extends ModelInterface {
             geoPosition: {
                 $near: {
                     $maxDistance: maxDistance,
-                    $geometry: { 
+                    $geometry: {
                         type: constants.houseConst.geoLocationPoint,
-                        coordinates: [coordinates.x, coordinates.y] 
+                        coordinates: [coordinates.x, coordinates.y]
                     }
                 }
             },
             ...filter
         };
-        
+
         return new Promise((resolve, reject) => {
             this.driver.findByFilter(this._model, searchByLocation, selectValues, (err, info) => {
                 if(err) {

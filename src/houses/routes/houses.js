@@ -1,3 +1,4 @@
+const { query } = require("express");
 const express = require("express");
 const router = express.Router();
 const uid = require("uid");
@@ -5,10 +6,14 @@ const uid = require("uid");
 const authorization = containerDependency.get("authService").authMiddleware;
 const houseModel = containerDependency.get("houseModel");
 const imageManager = containerDependency.get("imageService");
+const paramBuilder = containerDependency.get("houseParamBuilder");
 
-router.get("/", (req, res, next) => {
+router.get("/", ({ query }, res, next) => {
+  const findParams = paramBuilder.setParams(query);
+  const paginationParams = paramBuilder.setPagination(query);
+
   houseModel
-    .findAll(HousesResponse.showAllHouses)
+    .find(findParams, paginationParams, HousesResponse.showAllHouses)
     .then(({ info, status }) => {
       res.status(status).json(info);
     })
@@ -17,30 +22,15 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.get("/main", (req, res, next) => {
-  const location = req.query.city || '';
-  const limit = Number(req.query.limit) || 20;
+router.get("/search", ({ query }, res, next) => {
+  const findParams = paramBuilder.setParams(query);
+  const paginationParams = paramBuilder.setPagination(query);
+
+  console.log(findParams);
+  console.log(paginationParams);
 
   houseModel
-    .findWithLimit(location, limit, HousesResponse.showAllHouses)
-    .then(({ info, status }) => {
-      res.status(status).json(info);
-    })
-    .catch(({ error, status }) => {
-      res.status(status).json(error);
-    });
-});
-
-router.get("/search", (req, res, next) => {
-  const city = req.query.city || '';
-  const country = req.query.country || '';
-  const price = (req.query.price && req.query.price.split("-")) || '';
-  const type = req.query.type || '';
-  const roomsQty = req.query.rooms || '';
-  const limit = Number(req.query.limit) || 20;
-
-  houseModel
-    .find(req, HousesResponse.showAllHouses)
+    .find(findParams, paginationParams, HousesResponse.showAllHouses)
     .then(({ info, status }) => {
       res.status(status).json(info);
     })
@@ -69,7 +59,7 @@ router.get("/geolocation", (req, res, next) => {
     });
 });
 
-router.get("/id/:id", (req, res, next) => {
+router.get("/show/:id", (req, res, next) => {
   const id = req.params.id; //sh3yfelxzkyvuh9cb3q8 for test
 
   houseModel
@@ -106,7 +96,7 @@ router.post("/add_house_images", async (req, res, next) => {
   const userId = req.body.userId;
   const houseId = req.body.houseId;
   const folder = `users/${userId}/houses/${houseId}/`;
-  
+
   const images = await imageManager.uploadImages(imagesToSave, folder);
   const transformImage = await houseModel.editInfo({ public_id: houseId }, { resources: { photos: images.info }});
   res.status(200).json(transformImage);

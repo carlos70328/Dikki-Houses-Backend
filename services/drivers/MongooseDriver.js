@@ -12,7 +12,7 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * create mongodb connection
-     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
+     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options
      */
     connect(){
         const connectionString = this.makeConnectionString(this.params);
@@ -28,12 +28,12 @@ class Mongoose extends DatabaseInterface {
         if(Helpers.isSet(protocol) && Helpers.isSet(host) && Helpers.isSet(database)){
             let connectStr = `${protocol}://[credentials]${host}/${database}[params]`;
 
-            Helpers.isSet(user) && Helpers.isSet(password) ? 
-                connectStr = connectStr.replace('[credentials]', `${user}:${password}@`) : 
+            Helpers.isSet(user) && Helpers.isSet(password) ?
+                connectStr = connectStr.replace('[credentials]', `${user}:${password}@`) :
                 connectStr = connectStr.replace('[credentials]', '');
 
-            Helpers.isSet(params) ? 
-                connectStr = connectStr.replace('[params]', `?${params}`) : 
+            Helpers.isSet(params) ?
+                connectStr = connectStr.replace('[params]', `?${params}`) :
                 connectStr = connectStr.replace('[params]', '');
 
             return connectStr;
@@ -44,7 +44,7 @@ class Mongoose extends DatabaseInterface {
 
     /**
      * close mongodb connection
-     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options 
+     * @param {Object} connectionInfo : contains protocol, user, password, host, params and options
      */
     disconnect(){
         this.driver.connection.close()
@@ -67,9 +67,9 @@ class Mongoose extends DatabaseInterface {
     }
 
     /**
-     * 
-     * @param {Schema} schema 
-     * @param {Object} indexObject 
+     *
+     * @param {Schema} schema
+     * @param {Object} indexObject
      */
     addIndex(schema, indexObject){
         schema.index(indexObject);
@@ -108,15 +108,15 @@ class Mongoose extends DatabaseInterface {
      * @param {string} model : data selector
      * @param {Function} callback : when finish
      */
-    findByFilter(model, filter, limit, selectData, callback){
-        model.find(filter).select(selectData).limit(limit).exec(callback);
+    findByFilter(model, filter, pagination, selectData, callback){
+        model.find(filter, selectData, pagination).exec(callback);
     }
-    
+
     /**
      * Save info on database
      * @param {ModelInterface} model : Model base for save
      * @param {Object} info : Info as Json object to save
-     * @param {Function} callback 
+     * @param {Function} callback
      */
     save(model, info, callback){
         new model(info).save(callback);
@@ -127,7 +127,7 @@ class Mongoose extends DatabaseInterface {
      * @param {ModelInterface} model : Model base for edit
      * @param {Object} filter : Search property object (use id)
      * @param {Object} update : Property to change
-     * @param {Function} callback 
+     * @param {Function} callback
      */
     edit(model, filter, update, callback){
         model.findOneAndUpdate(filter, update, this.options, callback);

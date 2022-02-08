@@ -26,6 +26,7 @@ const CloudinaryDriver = require('../services/drivers/CloudinaryDriver');
 const HouseSchema = require('../src/houses/schemas/HouseSchema');
 const HouseIndexes = require('../src/houses/schemas/housesIndexes');
 const HouseModel = require('../src/houses/models/HouseModel');
+const houseParamBuilder = require('../src/houses/classes/ParamBuilder');
 
 const Auth0Service = require('../src/middlewares/authorization/auth0/Auth0');
 const ImageService = require('../src/images/classes/ImageManager');
@@ -38,6 +39,7 @@ container.register('cloudinaryDriver', CloudinaryDriver).addArgument(cloudinary)
 
 container.register('houseSchema', HouseSchema).addArgument(container.get('mongooseDriver')).addArgument(HOUSE_SCHEMA).addArgument(schemaTransformations).addArgument(HouseIndexes);
 container.register('houseModel', HouseModel).addArgument(container.get('mongooseDriver')).addArgument('houses').addArgument(container.get('houseSchema'));
+container.register('houseParamBuilder', houseParamBuilder);
 
 container.register('imageService', ImageService).addArgument(container.get('cloudinaryDriver'));
 container.register('authService', Auth0Service).addArgument(jwt).addArgument(jwksRsa).addArgument(auth0Variables);

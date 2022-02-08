@@ -4,9 +4,9 @@ class ModelInterface {
 
     /**
      * Init model definition
-     * @param {Driver} driver: 
-     * @param {string} modelName 
-     * @param {schema} houseSchema 
+     * @param {Driver} driver:
+     * @param {string} modelName
+     * @param {schema} houseSchema
      */
     constructor(driver, modelName, schema){
         this.driver = driver;
@@ -30,7 +30,7 @@ class ModelInterface {
             this.driver.findAll(this._model, selectValues, (err, info) => {
                 if(err) {
                     reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
-                } 
+                }
                 else {
                     resolve({ status: constants.httpConst.OK, info: info});
                 }
@@ -38,22 +38,19 @@ class ModelInterface {
         });
     }
 
-    find(filter = {}, selectValues = '') {
-        console.log("LLLLL");
-        console.log("filter", filter);
+    find(filter = {}, pagination, selectValues = '') {
         return new Promise((resolve, reject) => {
             try {
-                this.driver.findByFilter(this._model, filter, 20, selectValues, (err, info) => {
+                this.driver.findByFilter(this._model, filter, pagination, selectValues, (err, info) => {
                     if(err) {
                         reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
-                    } 
+                    }
                     else {
                         resolve({ status: constants.httpConst.OK, info: info});
                     }
                 });
             } catch (e){
-                console.log(e);
-                console.log(e.message);
+                reject({ status: constants.httpConst.CLIENT_ERROR, error: e.message });
             }
         });
     }
@@ -64,7 +61,7 @@ class ModelInterface {
                 this.driver.aggregate(this._model, selectValues, location, limit, (err, info) => {
                     if(err) {
                         reject({ status: constants.httpConst.CLIENT_ERROR, error: err });
-                    } 
+                    }
                     else {
                         resolve({ status: constants.httpConst.OK, info: info});
                     }
@@ -130,7 +127,7 @@ class ModelInterface {
         confidential.map(data => objectHelpers.removePropertyFromObject(info, data));
         return info;
     }
-    
+
 }
 
 module.exports = ModelInterface;
