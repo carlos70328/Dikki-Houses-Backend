@@ -1,94 +1,105 @@
 {
-    "public_id": { "type": "String", "required": true },
-    "description": { "type": "String", "required": true },
-    "owner": { "type": "String", "required": true },
-    "price": { "type": "Number", "min": 0, "required": true },
-    "status": { "type": "String", "required": true },
-    "type": { "type": "String", "required": true },
-    "stratum": { "type": "Number", "min": 1, "required": true },
-    "title": { "type": "String", "required": true },
-    "statusProcess": { "type": "String", "default":  "noFinished" },
-    "size": {
-        "measure": { "type": "String", "required": true },
-        "sizeType": { "type": "String", "required": true }
-    },
-    "location": {
-        "country": { "type": "String", "required": true },
-        "state": { "type": "String", "required": true },
-        "city": { "type": "String", "required": true },
-        "address": { "type": "String", "required": true },
-        "zipcode":{"type": "String", "required": false }
-    },
-    "geoPosition": {
-        "type": { "type": "String", "default": "Point" },
-        "coordinates": [
-            { "type": "Number", "required": true },
-            { "type": "Number", "required": true }
-        ]
-    },
-    "components": {
-        "floors": {
-            "quantity": { "type": "Number", "min": 0, "default": 1 }
-        },
-        "bathrooms": {
-            "quantity": { "type": "Number", "min": 0, "default": 1 }
-        },
-        "bedrooms": {
-            "quantity": { "type": "Number", "min": 0, "default": 1 }
-        },
-        "garage": {
-            "description": { "type": "String", "required": true }
-        },
-        "kitchen": {
-            "description": { "type": "String", "required": true }
-        },
-        "yard": {
-            "description": { "type": "String", "required": true }
-        }
-    },
-    "services": {
-        "type": [{
-            "date": { "type": "Date", "default": "Date.now"},
+   "public_id": { "type": "String", "required": true },
+   "description": { "type": "String", "required": true },
+   "owner": { "type": "String", "required": true },
+   "price": { "type": "Number", "min": 0, "required": true },
+   "status": { "type": "String", "required": true },
+   "type": { "type": "String", "required": true },
+   "stratum": { "type": "Number", "min": 1, "required": true },
+   "title": { "type": "String", "required": true },
+   "statusProcess": { "type": "String", "default": "noFinished" },
+   "size": {
+      "measure": { "type": "String", "required": true },
+      "sizeType": { "type": "String", "required": true }
+   },
+   "location": {
+      "country": { "type": "String", "required": true },
+      "state": { "type": "String", "required": true },
+      "city": { "type": "String", "required": true },
+      "address": { "type": "String", "required": true },
+      "zipcode": { "type": "String", "required": false }
+   },
+   "geoPosition": {
+      "type": { "type": "String", "default": "Point" },
+      "coordinates": [
+         { "type": "Number", "required": true },
+         { "type": "Number", "required": true }
+      ]
+   },
+   "components": {
+      "floors": {
+         "quantity": {
+            "type": "Number",
+            "min": 0,
+            "default": 1,
+            "required": false
+         }
+      },
+      "bathrooms": {
+         "quantity": { "type": "Number", "min": 0, "default": 1 }
+      },
+      "bedrooms": {
+         "quantity": { "type": "Number", "min": 0, "default": 1 }
+      },
+      "garage": {
+         "description": { "type": "String", "required": true }
+      },
+      "kitchen": {
+         "description": { "type": "String", "required": true }
+      },
+      "yard": {
+         "description": { "type": "String", "required": true }
+      }
+   },
+   "services": {
+      "type": [
+         {
+            "date": {
+               "type": "Date",
+               "default": "Date.now",
+               "required": false
+            },
             "values": {
-                "water": { "type": "Number", "min": 0, "required": true },
-                "energy": { "type": "Number", "min": 0, "required": true },
-                "gas": { "type": "Number", "min": 0, "required": true }
+               "water": { "type": "Number", "min": 0, "required": false },
+               "energy": { "type": "Number", "min": 0, "required": false },
+               "gas": { "type": "Number", "min": 0, "required": false }
             }
-        }]
-    },
-    "resources": {
-        "photos": [
-            {
-                "id": { "type": "String", "required": true },
-                "public_id": { "type": "String", "required": true },
-                "name": { "type": "String", "default": "noName" },
-                "type": { "type": "String", "default": "image" },
-                "description": { "type": "String", "default": "noDescription" },
-                "url": { "type": "String", "default": "noUrl" },
-                "date": { "type": "String", "required": true }
-            }
-        ],
-        "videos": [
-            {
-                "id": { "type": "String", "required": true },
-                "public_id": { "type": "String", "required": true },
-                "name": { "type": "String", "default": "noName" },
-                "type": { "type": "String", "default": "video" },
-                "description": { "type": "String", "default": "noDescription" },
-                "url": { "type": "String", "default": "noUrl" },
-                "date": { "type": "String", "required": true }
-            }
-        ],
-        "other": [
-            {
-                "id": { "type": "String", "required": true },
-                "public_id": { "type": "String", "required": true },
-                "name": { "type": "String", "default": "noName" },
-                "type": { "type": "String", "required": true },
-                "description": { "type": "String", "default": "noDescription" },
-                "url": { "type": "String", "default": "noUrl" },
-                "date": { "type": "String", "required": true }
-            }
-        ]
-    }
+         }
+      ]
+   },
+   "resources": {
+      "photos": [
+         {
+            "id": { "type": "String", "required": true },
+            "public_id": { "type": "String", "required": true },
+            "name": { "type": "String", "default": "noName" },
+            "type": { "type": "String", "default": "image" },
+            "description": { "type": "String", "default": "noDescription" },
+            "url": { "type": "String", "default": "noUrl" },
+            "date": { "type": "String", "required": true }
+         }
+      ],
+      "videos": [
+         {
+            "id": { "type": "String", "required": true },
+            "public_id": { "type": "String", "required": true },
+            "name": { "type": "String", "default": "noName" },
+            "type": { "type": "String", "default": "video" },
+            "description": { "type": "String", "default": "noDescription" },
+            "url": { "type": "String", "default": "noUrl" },
+            "date": { "type": "String", "required": true }
+         }
+      ],
+      "other": [
+         {
+            "id": { "type": "String", "required": true },
+            "public_id": { "type": "String", "required": true },
+            "name": { "type": "String", "default": "noName" },
+            "type": { "type": "String", "required": true },
+            "description": { "type": "String", "default": "noDescription" },
+            "url": { "type": "String", "default": "noUrl" },
+            "date": { "type": "String", "required": true }
+         }
+      ]
+   }
 }
