@@ -1,5 +1,4 @@
 const DatabaseInterface = require('../interfaces/DatabaseInterface');
-const DatabaseInterface = require("../interfaces/DatabaseInterface");
 
 class Mongoose extends DatabaseInterface {
 
