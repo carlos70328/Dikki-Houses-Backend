@@ -144,16 +144,19 @@ class Mongoose extends DatabaseInterface {
         schema.methods[functionName] = schemaFuntion;
     }
 
-    convertPositon(converGeoPosition){
-        if(converGeoPosition.x !== undefined && converGeoPosition.y !== undefined){
-            return {
-                type: "Point",
-                coordinates: [ converGeoPosition.x, converGeoPosition.y ]
-            }
-        } else {
-            throw new Error("Invalid coordinates format");
-        }
-    }
+   convertPositon(converGeoPosition){
+      if (
+         converGeoPosition.coordinates[0] !== undefined &&
+         converGeoPosition.coordinates[1] !== undefined
+      ) {
+         return {
+            type: "Point",
+            coordinates: [converGeoPosition.coordinates[0], converGeoPosition.coordinates[1]],
+         };
+      } else {
+         throw new Error("Invalid coordinates format");
+      }
+   }
 }
 
 module.exports = Mongoose;
