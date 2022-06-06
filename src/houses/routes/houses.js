@@ -2,6 +2,9 @@ const { query } = require("express");
 const express = require("express");
 const router = express.Router();
 const uid = require("uid");
+const cors = require("cors");
+
+router.use(cors());
 
 const authorization = containerDependency.get("authService").authMiddleware;
 const houseModel = containerDependency.get("houseModel");
