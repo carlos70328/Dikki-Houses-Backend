@@ -26,12 +26,8 @@ router.get("/", ({ query }, res, next) => {
 });
 
 router.get("/search", ({ query }, res, next) => {
-   console.log('EXECUTING QUERY SEARCH', query)
    const findParams = paramBuilder.setParams(query);
    const paginationParams = paramBuilder.setPagination(query);
-
-   console.log(findParams);
-   console.log(paginationParams);
 
    houseModel
       .find(findParams, paginationParams, HousesResponse.showAllHouses)
