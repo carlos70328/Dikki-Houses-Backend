@@ -7,7 +7,7 @@ class ImageManagerInterface {
     uploadImages(images, folder, callback){
         return new Promise((resolve, reject) => {
             const promises = images.map(dataImage => 
-                this.driver.uploadImage(dataImage.path, { folder: folder }) 
+                this.driver.uploadImage(dataImage.originalname, { folder: folder }) 
             );
     
             Promise.all(promises)

@@ -7,11 +7,15 @@ const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const formData = require('express-form-data');
+// const formData = require('express-form-data');
+// const bodyParser = require('body-parser');
+
+
 
 const indexRouter = require('./src/houses/routes/index'); //MOVE IT 
 const housesRouter = require('./src/houses/routes/houses');
 const app = express();
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use(formData.parse());
+// app.use(formData.parse());
 
 containerDependency.get('mongooseDriver').connect();
 

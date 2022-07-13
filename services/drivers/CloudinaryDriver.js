@@ -12,7 +12,10 @@ class CloudinaryDriver extends ImageInterface {
     }
 
     async uploadImage(imagePath, properties){
+        console.log("los negritos")
+        console.log(imagePath, properties);
         const uploader = await this.service.uploader.upload(imagePath, properties);
+
         return this.transformFormat(uploader)
     }
 
