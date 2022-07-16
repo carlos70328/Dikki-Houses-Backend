@@ -26,6 +26,20 @@
          { "type": "Number", "required": true }
       ]
    },
+   "contact": {
+      "phones": [
+         {
+            "number": { "type": "String", "required": true },
+            "type": {
+               "type": "String",
+               "default": "default",
+               "enum": ["whatsapp", "telegram", "other", "default"],
+               "required": true
+            }
+         }
+      ],
+      "networks": [{ "type": "String", "required": false }]
+   },
    "components": {
       "floors": {
          "quantity": {

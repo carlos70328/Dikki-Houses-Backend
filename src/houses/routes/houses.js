@@ -4,8 +4,8 @@ const router = express.Router();
 const uid = require("uid");
 const cors = require("cors");
 const multer = require("multer");
-const DatauriParser = require('datauri/parser');
-const path = require('path');
+const DatauriParser = require("datauri/parser");
+const path = require("path");
 
 router.use(cors());
 
@@ -14,13 +14,15 @@ const houseModel = containerDependency.get("houseModel");
 const imageManager = containerDependency.get("imageService");
 const paramBuilder = containerDependency.get("houseParamBuilder");
 
-
-const parser = new DatauriParser();
 const upload = multer({}).array("images");
 
-const formatBufferTo64 = files =>
-  parser.format(path.extname(files.originalname).toString(), files.buffer)
+const formatBufferTo64 = (file) =>
+   new DatauriParser().format(file.originalname.toString(), file.buffer);
 
+const arrayBufferToBase64 = (files) => {
+   const images = files.map((file) => formatBufferTo64(file));
+   return images;
+};
 
 router.get("/", ({ query }, res, next) => {
    const findParams = paramBuilder.setParams(query);
@@ -56,12 +58,7 @@ router.get("/geolocation", (req, res, next) => {
    const filter = req.query.filter;
 
    houseModel
-      .findByLocation(
-         coordinates,
-         maxDistance,
-         filter,
-         HousesResponse.showAllHouses
-      )
+      .findByLocation(coordinates, maxDistance, filter, HousesResponse.showAllHouses)
       .then(({ info, status }) => {
          res.status(status).json(info);
       })
@@ -70,7 +67,7 @@ router.get("/geolocation", (req, res, next) => {
       });
 });
 
-router.get("/show/:id", (req, res, next) => {
+router.get("/details/:id", (req, res, next) => {
    const id = req.params.id; //sh3yfelxzkyvuh9cb3q8 for test
 
    houseModel
@@ -102,38 +99,29 @@ router.post("/add_houses", (req, res, next) => {
    }
 });
 
-//
-
-router.post("/add_house_images" ,upload, async  (req, res, next) => {
-
+router.post("/add_house_images", upload, async (req, res, next) => {
    try {
-      const file64 = formatBufferTo64(req.files);
+      const file64 = arrayBufferToBase64(req.files);
       const imagesToSave = file64;
-      console.log("images que se guardan ")
-      console.log(imagesToSave.content);
-     
       const userId = req.body.userId;
-      const houseId = req.body.houseId;   
-      const folder = `users/${userId}/houses/${houseId}/`;  
+      const houseId = req.body.houseId;
+      const folder = `users/${userId}/houses/${houseId}/`;
       const images = await imageManager.uploadImages(imagesToSave, folder);
       const transformImage = await houseModel.editInfo(
          { public_id: houseId },
          { resources: { photos: images.info } }
       );
-      console.log(imagesToSave);
+      console.log(transformImage);
       res.status(200).json(transformImage);
    } catch (error) {
       console.log(error);
    }
-      
-
 });
 
-router.post("/add_house_images_test" , upload,   (req, res, next) => {
-   console.log("negrito");  
+router.post("/add_house_images_test", upload, (req, res, next) => {
+   console.log("negrito");
    res.status(200).json(req.files);
-   
-})
+});
 
 router.post("/edit_house", (req, res, next) => {
    const filter = req.body.filter;
