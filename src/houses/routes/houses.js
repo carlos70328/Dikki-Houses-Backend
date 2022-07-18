@@ -111,10 +111,9 @@ router.post("/add_house_images", upload, async (req, res, next) => {
          { public_id: houseId },
          { resources: { photos: images.info } }
       );
-      console.log(transformImage);
       res.status(200).json(transformImage);
    } catch (error) {
-      console.log(error);
+      res.status(400).json(error.message);
    }
 });
 
