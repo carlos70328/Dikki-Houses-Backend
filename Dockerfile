@@ -2,5 +2,5 @@ FROM mongo
 
 COPY ./data/mongo/seeds /mongo-seeds
 
-CMD ['npm', 'start]
+CMD ['npm', 'run', 'start']
 
