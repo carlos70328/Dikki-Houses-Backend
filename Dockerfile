@@ -2,7 +2,7 @@
 FROM node:14
 
 
-WORKDIR /app
+WORKDIR /bin/WWW
 
 
 COPY package*.json ./
