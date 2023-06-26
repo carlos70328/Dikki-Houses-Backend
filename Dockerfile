@@ -15,6 +15,7 @@ COPY . .
 
 
 EXPOSE 27017
+EXPOSE 27018
 
 
 CMD [ "npm", "start" ]
